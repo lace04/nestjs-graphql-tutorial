@@ -8,7 +8,8 @@ import { User } from './entities/user.entity';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private _userRepository: Repository<User>,
+    @InjectRepository(User)
+    private _userRepository: Repository<User>,
   ) {}
 
   async create(createUserInput: CreateUserInput): Promise<User> {
