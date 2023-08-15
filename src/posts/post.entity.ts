@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -23,4 +24,12 @@ export class Post {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @Field({ nullable: true })
   updatedAt: Date;
+
+  @Column()
+  @Field(() => Int)
+  userId: number;
+
+  @ManyToOne(() => User, (user) => user.posts)
+  @Field(() => User)
+  user: User;
 }

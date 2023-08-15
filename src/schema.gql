@@ -2,10 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Post {
+type User {
   id: Int!
-  title: String!
-  content: String
+  name: String!
+  posts: [Post!]
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -15,15 +15,41 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Post {
+  id: Int!
+  title: String!
+  content: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  userId: Int!
+  user: User!
+}
+
 type Query {
   posts: [Post!]!
+  post(id: Int!): Post!
+  users: [User!]!
+  user(id: Int!): User!
 }
 
 type Mutation {
   createPost(postInput: createPostInput!): Post!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
 }
 
 input createPostInput {
   title: String!
-  content: String!
+  content: String
+  userId: Float!
+}
+
+input CreateUserInput {
+  name: String!
+}
+
+input UpdateUserInput {
+  name: String
+  id: Int!
 }
