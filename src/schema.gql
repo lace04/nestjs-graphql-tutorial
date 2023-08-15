@@ -34,9 +34,11 @@ type Query {
 
 type Mutation {
   createPost(postInput: createPostInput!): Post!
+  updatePost(postInput: UpdatePostInput!): Post!
+  deletePost(id: Int!): Boolean!
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
+  deleteUser(id: Int!): Boolean!
 }
 
 input createPostInput {
@@ -45,11 +47,17 @@ input createPostInput {
   userId: Float!
 }
 
+input UpdatePostInput {
+  id: Int!
+  title: String
+  content: String
+}
+
 input CreateUserInput {
   name: String!
 }
 
 input UpdateUserInput {
-  name: String
   id: Int!
+  name: String
 }

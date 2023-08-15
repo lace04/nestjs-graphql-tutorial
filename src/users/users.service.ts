@@ -18,7 +18,7 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return this._userRepository.find();
+    return this._userRepository.find({ relations: ['posts'] });
   }
 
   async findOne(id: number): Promise<User> {
@@ -26,14 +26,17 @@ export class UsersService {
       where: {
         id,
       },
+      relations: ['posts'],
     });
   }
 
-  async update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async updateUser(user: UpdateUserInput): Promise<User> {
+    const { id, ...updateData } = user;
+    await this._userRepository.update(id, updateData);
+    return this.findOne(id);
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} user`;
+  async deleteUser(id: number): Promise<void> {
+    await this._userRepository.delete(id);
   }
 }

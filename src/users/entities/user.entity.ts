@@ -13,10 +13,11 @@ export class User {
   @Field()
   name: string;
 
-  @OneToMany(() => Post, (post) => post.user)
-  @Field(() => [Post], { nullable: true })
+  //delete user's posts when user is deleted
+  @OneToMany(() => Post, (post) => post.user, { onDelete: 'CASCADE' })
+  @Field((type) => [Post], { nullable: true })
   posts: Post[];
-
+  
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   @Field({ nullable: true })
   createdAt: Date;
